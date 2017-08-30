@@ -35,7 +35,9 @@ page.open(url, function(status) {
     
 
         result.date_time = new Date()
-
+        result.dataText = page.evaluate(function() {
+            return document.getElementsByClassName('detail')[0].innerText
+        })
         
         console.log('--------content---------')
         // console.log(JSON.parse(result));
@@ -46,11 +48,11 @@ page.open(url, function(status) {
         console.log("render image after search button klik done..");
         phantom.exit()
       }
-      page.evaluate(function() {
-        
+      page.evaluate(function(idProduct) {
+        // var idProduct = "32544859436"
         $("#search-key").val(idProduct)
         $("#form-searchbar > div.searchbar-operate-box > input").click()
-      })
+      },idProduct)
       console.log("insert value id and click search...");
       page.render("before_search.png")
     })
